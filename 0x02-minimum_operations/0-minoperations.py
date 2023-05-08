@@ -12,18 +12,21 @@ Example:
 
 n = 9
 
-H => Copy All => Paste => HH => Paste =>HHH => Copy All => Paste => HHHHHH => Paste => HHHHHHHHH
+H => Copy All => Paste => HH => Paste =>HHH =>
+Copy All => Paste => HHHHHH =>
+Paste => HHHHHHHHH
 
 Number of operations: 6
 """
 
+
 def minOperations(n):
     """This is the function that calculates
      the number of operations."""
-    
+
     if n <= 1:
         return 0
-    
+
     num, div, numOfOperations = n, 2, 0
 
     while num > 1:
@@ -32,4 +35,5 @@ def minOperations(n):
             numOfOperations = numOfOperations + div
         else:
             div += 1
+
     return numOfOperations
