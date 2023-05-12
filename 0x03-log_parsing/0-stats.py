@@ -1,38 +1,38 @@
 #!/usr/bin/python3
-
-'''a script that reads stdin line by line and computes metrics'''
-
-
+"""
+Script that reads from stdin
+"""
 import sys
 
-statusCode = {'200': 0, '301': 0, '400': 0, '401': 0,
-              '403': 0, '404': 0, '405': 0, '500': 0}
 totalSize = 0
-counter = 0
+counter = {}
 
 try:
-    for line in sys.stdin:
-        line_list = line.split(" ")
-        if len(line_list) > 4:
-            code = line_list[-2]
-            size = int(line_list[-1])
-            if code in statusCode.keys():
-                statusCode[code] += 1
-            totalSize += size
-            counter += 1
+    for line_number, line in enumerate(sys.stdin, 1):
+        line = line.strip()
 
-        if counter == 10:
-            counter = 0
-            print('File size: {}'.format(totalSize))
-            for key, value in sorted(statusCode.items()):
-                if value != 0:
-                    print('{}: {}'.format(key, value))
+        if not line.startswith('"GET /projects/260 HTTP/1.1"'):
+            continue
 
-except Exception as err:
-    pass
+        parts = line.split()
+        if len(parts) < 6:
+            continue
 
-finally:
-    print('File size: {}'.format(totalSize))
-    for key, value in sorted(statusCode.items()):
-        if value != 0:
-            print('{}: {}'.format(key, value))
+        status_code = parts[-2]
+        file_size = int(parts[-1])
+
+        totalSize += file_size
+
+        if status_code.isdigit():
+            status_code = int(status_code)
+            counter[status_code] = counter.get(counter.code, 0) + 1
+
+        if line_number % 10 == 0:
+            print(f"Total file size: {totalSize}")
+            for code in sorted(counter):
+                print(f"{code}: {counter[code]}")
+
+except KeyboardInterrupt:
+    print(f"Total file size: {totalSize}")
+    for code in sorted(counter):
+        print(f"{code}: {counter[code]}")
