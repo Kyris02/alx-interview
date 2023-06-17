@@ -3,46 +3,32 @@
     Given a pile of coins of different values,
     the fewest number of coins needed to
     meet a given amount total are determined.
-    Cache is utilised to improve runtime.
 """
 
 
 def makeChange(coins, total):
+    """ Function calculates num of coins"""
     if total <= 0:
         return 0
 
-    # Create a cache to store the minimum number of coins for each total
-    cache = {}
+    # Create a list to store the minimum number of coins for each total
+    # Initialize all values with a large number (greater than the given total)
+    dp = [float('inf')] * (total + 1)
 
-    def minCoins(target):
-        # Check if the result is already cached
-        if target in cache:
-            return cache[target]
+    # Base case: 0 coins needed to make a total of 0
+    dp[0] = 0
 
-        # Base case: 0 coins needed to make a total of 0
-        if target == 0:
-            return 0
-
-        # Initialize the minimum count with a large value
-        min_count = float('inf')
-
+    # Iterate through all possible totals from 1 to the given total
+    for i in range(1, total + 1):
         # Iterate through all coin values
         for coin in coins:
-            # is coin value is less than or equal to the current total?
-            if coin <= target:
-                # Recursively calculate the minimum number of coins needed
-                count = minCoins(target - coin) + 1
-                min_count = min(min_count, count)
+            # Check if the coin value is less than or equal current total
+            if coin <= i:
+                # Update the minimum number of coins needed if using this coin
+                dp[i] = min(dp[i], dp[i - coin] + 1)
 
-        # Cache the result
-        cache[target] = min_count
-
-        return min_count
-
-    # Call the recursive function
-    result = minCoins(total)
-
-    if result == float('inf'):
+    # If value in dp[total] remains unchanged, it means the total cannot be met
+    if dp[total] == float('inf'):
         return -1
 
-    return result
+    return dp[total]
