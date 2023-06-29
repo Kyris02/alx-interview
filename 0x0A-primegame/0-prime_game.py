@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 def isWinner(x, nums):
     wins = {"Maria": 0, "Ben": 0}
 
