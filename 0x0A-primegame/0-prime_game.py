@@ -1,10 +1,17 @@
 #!/usr/bin/python3
 
+""" This is a prime games that determines a winner when
+    there are no longer any prime number to pick from.
+"""
+
+
 def isWinner(x, nums):
+    """Function that determines the winner."""
     wins = {"Maria": 0, "Ben": 0}
 
-    # Helper function to check if a number is prime
     def is_prime(num):
+        """Helper function to check if a number is prime"""
+
         if num < 2:
             return False
         for i in range(2, int(num ** 0.5) + 1):
