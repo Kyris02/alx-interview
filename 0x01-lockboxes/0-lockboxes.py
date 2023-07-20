@@ -18,7 +18,7 @@ def canUnlockAll(boxes):
         for key in boxes[box]:
             # If the key opens a new box that hasn't been visited yet,
             # add it to the stack
-            if key not in visited and 0 <= key < total_boxes:
+            if key not in visited and key >= 0 < total_boxes:
                 stack.append(key)
 
     # If all boxes have been visited, then all boxes can be opened
