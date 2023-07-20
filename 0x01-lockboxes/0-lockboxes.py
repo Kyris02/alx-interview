@@ -1,4 +1,11 @@
+#!/usr/bin/python3
+
+"""Contains a function that takes on a list of list (boxes)
+    and determines if they can all be unlocked or not."""
+
+
 def canUnlockAll(boxes):
+    """a method that determines if all the boxes can be opened."""
     total_boxes = len(boxes)
     visited = set()
     stack = [0]  # Start from box 0 (the first box)
