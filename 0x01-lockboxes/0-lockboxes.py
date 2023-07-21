@@ -11,7 +11,7 @@ def canUnlockAll(boxes):
     stack = [0]  # Start from box 0 (the first box)
 
     while stack:
-        box = stack.pop()
+        box = stack.pop()  # this initially gives box the value 0 :)
         visited.add(box)
 
         # Check all the keys in the current box
